@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      CI: "true"
+      PORT: "4000"
+      FRONTEND_URL: "http://localhost:3000"
+      NEXT_PUBLIC_API_URL: "http://localhost:4000/api"
+      DB_HOST: "127.0.0.1"
+      DB_PORT: "3306"
+      DB_USER: "taskmgmt_ci"
+      DB_PASSWORD: "ci-placeholder-password"
+      DB_NAME: "taskmgmt_ci"
+      MYSQL_ROOT_PASSWORD: "ci-placeholder-root-password"
+      JWT_SECRET: "ci-only-placeholder-jwt-secret-that-is-not-used-in-production"
+      JWT_EXPIRES_IN: "1h"
+      SMTP_HOST: "localhost"
+      SMTP_PORT: "1025"
+      SMTP_SECURE: "false"
+      SMTP_USER: "ci-placeholder-user"
+      SMTP_PASSWORD: "ci-placeholder-password"
+      SMTP_FROM: "Taskmgmt CI <noreply@example.test>"
+      DUE_NOTIFICATION_CRON: "*/5 * * * *"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Vitest suite
+        run: npm test
+
+      - name: Verify production build
+        run: npm run build

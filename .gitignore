@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Production builds
+dist/
+build/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Local environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime files
+*.pid
+*.pid.lock
+pids/
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Operating-system artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+
+# TypeScript and tooling caches
+*.tsbuildinfo
+.eslintcache
+.cache/
+.turbo/
+
+# Vitest
+.vitest/
+
+# Miscellaneous
+.vercel/
+*.pem
+coverage-final.json
